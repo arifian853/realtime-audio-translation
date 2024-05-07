@@ -17,4 +17,4 @@
 
 ### Teams
 
-- Arifian Saputra ![arifian853](https://github.com/arifian853)
+- Arifian Saputra [arifian853](https://github.com/arifian853)
