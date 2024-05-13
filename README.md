@@ -33,7 +33,7 @@ This is how the project will run, in a simple term :
 Link to Figma : [Figma](https://www.figma.com/file/RJR5fdZLMeni7BJl934TQC/AI-Real-Time-Audio-Translation?type=design&node-id=0%3A1&mode=design&t=B6Bz9E9fEnoDqoOs-1)
 
 
-- Web
+- Web/Desktop
 
 <img src="img/Web.png">
 
