@@ -51,21 +51,35 @@ def transcribe_audio():
     # Generate original transcription
     try:
         with torch.no_grad():
-            predicted_ids_original = model.generate(inputs)
-        original_transcription = processor.batch_decode(predicted_ids_original, skip_special_tokens=True)[0]
+            original_predicted_ids = model.generate(inputs)
     except Exception as e:
-        return jsonify({"error": f"Error generating original transcription with model: {str(e)}"}), 500
+        return jsonify({"error": f"Error generating original transcription: {str(e)}"}), 500
 
-    # Generate translated transcription
+    # Decode the original transcription
     try:
-        forced_decoder_ids = processor.get_decoder_prompt_ids(language=target_language, task="translate")
-        with torch.no_grad():
-            predicted_ids_translated = model.generate(inputs, forced_decoder_ids=forced_decoder_ids)
-        translated_transcription = processor.batch_decode(predicted_ids_translated, skip_special_tokens=True)[0]
+        original_transcription = processor.batch_decode(original_predicted_ids, skip_special_tokens=True)[0]
     except Exception as e:
-        return jsonify({"error": f"Error generating translated transcription with model: {str(e)}"}), 500
+        return jsonify({"error": f"Error decoding original transcription: {str(e)}"}), 500
 
-    return jsonify({"original_transcription": original_transcription, "translated_transcription": translated_transcription})
+    # Generate translated transcription if target language is different from source
+    translated_transcription = ""
+    if target_language != "en":  # Assuming the source language is English
+        try:
+            forced_decoder_ids = processor.get_decoder_prompt_ids(language=target_language, task="translate")
+            with torch.no_grad():
+                translated_predicted_ids = model.generate(inputs, forced_decoder_ids=forced_decoder_ids)
+        except Exception as e:
+            return jsonify({"error": f"Error generating translated transcription: {str(e)}"}), 500
+
+        try:
+            translated_transcription = processor.batch_decode(translated_predicted_ids, skip_special_tokens=True)[0]
+        except Exception as e:
+            return jsonify({"error": f"Error decoding translated transcription: {str(e)}"}), 500
+
+    return jsonify({
+        "original_transcription": original_transcription,
+        "translated_transcription": translated_transcription
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)

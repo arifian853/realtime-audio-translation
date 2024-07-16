@@ -8,8 +8,19 @@ import './App.css'
 import { BsRecordFill } from "react-icons/bs";
 import { BsStopFill } from "react-icons/bs";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 const App: React.FC = () => {
-  const [transcription, setTranscription] = useState<string>('');
+  const [originalTranscription, setOriginalTranscription] = useState<string>('');
+  const [translatedTranscription, setTranslatedTranscription] = useState<string>('');
   const [recording, setRecording] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [audioSrc, setAudioSrc] = useState<string>('');
@@ -38,7 +49,8 @@ const App: React.FC = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setTranscription(response.data.transcription);
+      setOriginalTranscription(response.data.original_transcription);
+      setTranslatedTranscription(response.data.translated_transcription);
     } catch (error) {
       console.error('Error uploading file:', error);
     } finally {
@@ -95,7 +107,7 @@ const App: React.FC = () => {
       <h1 className='p-5 m-5 bg-slate-700 text-white rounded-md'>Realtime Audio Translation</h1>
       <div className='flex m-5 gap-3'>
         <div className="p-5 bg-slate-700 text-white rounded-md flex w-1/2 flex-col gap-3">
-          <Label htmlFor="file">Input local file (.wav)</Label>
+          <Label htmlFor="file">Input local audio file</Label>
           <Input className='text-black' id="file" type="file" accept="audio/*" onChange={handleFileChange} />
         </div>
         <div className="p-5 bg-slate-700 text-white rounded-md flex w-1/2 flex-col gap-3">
@@ -128,33 +140,39 @@ const App: React.FC = () => {
           )}
         </div>
         <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
-          <Label>Transcription</Label>
+          <Label>Original Transcription</Label>
           {loading ? (
             <p className='flex flex-row justify-start items-center gap-3'><span className='loader'></span>Loading....</p>
           ) : (
-            <p>{transcription}</p>
+            <p>{originalTranscription}</p>
+          )}
+        </div>
+        <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
+          <Label>Translated Transcription</Label>
+          {loading ? (
+            <p className='flex flex-row justify-start items-center gap-3'><span className='loader'></span>Loading....</p>
+          ) : (
+            <p>{translatedTranscription}</p>
           )}
         </div>
       </div>
 
       <div className="flex m-5 gap-3">
-        <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
-          <Label htmlFor="language">Choose Language to translate</Label>
-          <select id="language" className='text-black' value={language} onChange={handleLanguageChange}>
-            <option value="en">English</option>
-            <option value="id">Indonesian</option>
-            {/* Add more languages as needed */}
-          </select>
-        </div>
-        <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
-          <Label>Translated Transcription (ex: ID to EN)</Label>
-          TBA
+        <div className='p-5 bg-slate-700 rounded-md flex w-full flex-col gap-3'>
+          <Label className="text-white" htmlFor="language">Choose Language to translate</Label>
+          <Select id="language" className='text-black' value={language} onChange={handleLanguageChange}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select language" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Select Language</SelectLabel>
+                <SelectItem value="en">Detect Language to English</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
-      <div className='p-5 m-5 bg-slate-700 text-white rounded-md flex flex-col gap-3'>
-          <Label>Translated Transcription Sound</Label>
-          TBA
-        </div>
     </div>
   );
 };
