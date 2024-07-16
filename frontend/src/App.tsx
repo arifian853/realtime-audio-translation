@@ -14,6 +14,7 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [audioSrc, setAudioSrc] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<Blob | null>(null);
+  const [language, setLanguage] = useState<string>('en'); // Default language
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
@@ -28,6 +29,7 @@ const App: React.FC = () => {
 
     const formData = new FormData();
     formData.append('file', selectedFile, 'audio.wav');
+    formData.append('language', language); // Add the selected language to the form data
 
     setLoading(true);
     try {
@@ -84,6 +86,10 @@ const App: React.FC = () => {
     }
   };
 
+  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setLanguage(event.target.value);
+  };
+
   return (
     <div>
       <h1 className='p-5 m-5 bg-slate-700 text-white rounded-md'>Realtime Audio Translation</h1>
@@ -133,11 +139,15 @@ const App: React.FC = () => {
 
       <div className="flex m-5 gap-3">
         <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
-          <Label htmlFor="Result">Choose Language to translate </Label>
-          TBA
+          <Label htmlFor="language">Choose Language to translate</Label>
+          <select id="language" className='text-black' value={language} onChange={handleLanguageChange}>
+            <option value="en">English</option>
+            <option value="id">Indonesian</option>
+            {/* Add more languages as needed */}
+          </select>
         </div>
         <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
-          <Label>Translated Transcription</Label>
+          <Label>Translated Transcription (ex: ID to EN)</Label>
           TBA
         </div>
       </div>
