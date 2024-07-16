@@ -17,7 +17,7 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 16000
 CHUNK = 1024
-RECORD_SECONDS = 5
+RECORD_SECONDS = 15
 WAVE_OUTPUT_FILENAME = "output.wav"
 
 audio = pyaudio.PyAudio()
@@ -27,7 +27,7 @@ stream = audio.open(format=FORMAT, channels=CHANNELS,
                     rate=RATE, input=True,
                     frames_per_buffer=CHUNK)
 
-print("Recording... 5s")
+print("Recording... 15s")
 
 frames = []
 
@@ -63,4 +63,8 @@ with torch.no_grad():
 # Decode the predictions
 transcription = processor.batch_decode(predicted_ids, skip_special_tokens=True)[0]
 
+print("\n")
+print("------------------------------------------")
 print("Transcription:", transcription)
+print("------------------------------------------")
+print("\n")

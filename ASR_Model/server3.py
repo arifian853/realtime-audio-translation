@@ -4,7 +4,7 @@ from flask_cors import CORS
 import torch
 import librosa
 from transformers import WhisperForConditionalGeneration, WhisperProcessor
-import wave
+from pydub import AudioSegment
 
 app = Flask(__name__)
 CORS(app)
@@ -28,18 +28,35 @@ def transcribe_audio():
         return jsonify({"error": "No selected file"}), 400
     file.save(WAVE_OUTPUT_FILENAME)
 
+    # Convert the audio file to WAV format using pydub
+    try:
+        audio = AudioSegment.from_file(WAVE_OUTPUT_FILENAME)
+        audio = audio.set_frame_rate(RATE)
+        audio.export(WAVE_OUTPUT_FILENAME, format="wav")
+    except Exception as e:
+        return jsonify({"error": f"Error processing audio file with pydub: {str(e)}"}), 500
+
     # Load the audio file using librosa
-    audio_input, sr = librosa.load(WAVE_OUTPUT_FILENAME, sr=RATE)
+    try:
+        audio_input, sr = librosa.load(WAVE_OUTPUT_FILENAME, sr=RATE)
+    except Exception as e:
+        return jsonify({"error": f"Error loading audio file with librosa: {str(e)}"}), 500
 
     # Process the audio file
     inputs = processor(audio_input, sampling_rate=RATE, return_tensors="pt").input_features
 
     # Generate predictions
-    with torch.no_grad():
-        predicted_ids = model.generate(inputs)
+    try:
+        with torch.no_grad():
+            predicted_ids = model.generate(inputs)
+    except Exception as e:
+        return jsonify({"error": f"Error generating predictions with model: {str(e)}"}), 500
 
     # Decode the predictions
-    transcription = processor.batch_decode(predicted_ids, skip_special_tokens=True)[0]
+    try:
+        transcription = processor.batch_decode(predicted_ids, skip_special_tokens=True)[0]
+    except Exception as e:
+        return jsonify({"error": f"Error decoding predictions: {str(e)}"}), 500
 
     return jsonify({"transcription": transcription})
 

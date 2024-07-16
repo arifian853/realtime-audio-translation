@@ -26,10 +26,15 @@ def transcribe_audio():
     file = request.files['file']
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
+    
+    # Save the file with correct format
     file.save(WAVE_OUTPUT_FILENAME)
-
-    # Load the audio file using librosa
-    audio_input, sr = librosa.load(WAVE_OUTPUT_FILENAME, sr=RATE)
+    
+    try:
+        # Load the audio file using librosa
+        audio_input, sr = librosa.load(WAVE_OUTPUT_FILENAME, sr=RATE)
+    except Exception as e:
+        return jsonify({"error": f"Error loading audio file: {str(e)}"}), 500
 
     # Process the audio file
     inputs = processor(audio_input, sampling_rate=RATE, return_tensors="pt").input_features
