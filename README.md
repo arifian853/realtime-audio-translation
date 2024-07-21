@@ -29,14 +29,42 @@ This is how the project will run, in a simple term :
 
 <img src="img/project-flow.jpg"> 
 
-### UI / UX
-Link to Figma : [Figma](https://www.figma.com/file/RJR5fdZLMeni7BJl934TQC/AI-Real-Time-Audio-Translation?type=design&node-id=0%3A1&mode=design&t=B6Bz9E9fEnoDqoOs-1)
+### Backend Requirements
+
+- These are requirements for the backend project : 
+```
+openai-whisper
+Flask
+flask_cors
+torch
+librosa
+transformers
+pydub
+sentencepiece
+```
+
+- Make new virtual environment with the name 'venv' : 
+
+```
+python -m venv venv
+```
+
+- Activate it with : 
+
+```
+./venv/Scripts/activate
+```
+
+- Install requirements
+
+```
+pip install -r requirements.txt
+```
 
 
-- Web/Desktop
+### Frontend Requirements
 
-<img src="img/Web.png">
-
-- Mobile
-
-<img src="img/Mobile.png">
+- Install the dependency : 
+```
+npm install
+```

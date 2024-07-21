@@ -1,0 +1,8 @@
+openai-whisper
+Flask
+flask_cors
+torch
+librosa
+transformers
+pydub
+sentencepiece
