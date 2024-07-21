@@ -61,6 +61,16 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
+- Run the server :
+
+```
+py server5.py
+```
+- Backend will served in ```localhost:5000```, and will only serve ```/transcribe``` endpoint.
+```
+http://localhost:5000/transcribe
+```
+
 
 ### Frontend Requirements
 
@@ -68,3 +78,18 @@ pip install -r requirements.txt
 ```
 npm install
 ```
+- Run the app
+```
+npm run dev
+```
+- The app will run at : 
+```
+http://localhost:5173
+```
+
+### Model used in backend
+
+- OpenAI Whisper as Automatic Speech Recognition
+- MarianMT as Machine Translation
+- 
+- 
