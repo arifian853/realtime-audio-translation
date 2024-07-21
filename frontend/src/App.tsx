@@ -102,9 +102,16 @@ const App: React.FC = () => {
     }
   };
 
+  const handleReset = () => {
+    setAudioSrc('');
+    setSelectedFile(null);
+    setOriginalTranscription('');
+    setTranslatedTranscription('');
+  };
+
   return (
     <div>
-      <h1 className='p-5 m-5 bg-slate-700 text-white rounded-md'>Realtime Audio Translation</h1>
+      <h1 className='p-5 m-5 bg-slate-700 text-white rounded-md text-center'>Realtime Audio Translation</h1>
       <div className='flex m-5 gap-3'>
         <div className="p-5 bg-slate-700 text-white rounded-md flex w-1/2 flex-col gap-3">
           <Label htmlFor="file">Input local audio file</Label>
@@ -126,34 +133,6 @@ const App: React.FC = () => {
               )
             }
           </div>
-        </div>
-      </div>
-
-      <div className="flex m-5 gap-3">
-        <div className='p-5 bg-slate-700 text-white rounded-md w-full gap-3'>
-          <Label htmlFor="Result">Record / File Result</Label>
-          {audioSrc && (
-            <div className='flex flex-row justify-center items-center'>
-              <audio className='m-5' controls src={audioSrc}></audio>
-              <Button onClick={handleTranscribe}>Transcribe</Button>
-            </div>
-          )}
-        </div>
-        <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
-          <Label>Original Transcription</Label>
-          {loading ? (
-            <p className='flex flex-row justify-start items-center gap-3'><span className='loader'></span>Loading....</p>
-          ) : (
-            <p>{originalTranscription}</p>
-          )}
-        </div>
-        <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
-          <Label>Translated Transcription</Label>
-          {loading ? (
-            <p className='flex flex-row justify-start items-center gap-3'><span className='loader'></span>Loading....</p>
-          ) : (
-            <p>{translatedTranscription}</p>
-          )}
         </div>
       </div>
 
@@ -181,6 +160,45 @@ const App: React.FC = () => {
             </SelectContent>
           </Select>
         </div>
+        <div className='p-5 bg-slate-700 text-white rounded-md w-full gap-3'>
+          <Label htmlFor="Result">Record / File Result</Label>
+          {audioSrc && (
+            <div className='flex flex-row justify-center items-center'>
+              <audio className='m-5' controls src={audioSrc}></audio>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="flex m-5 gap-3">
+        <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
+          <Label>Original Transcription</Label>
+          {loading ? (
+            <p className='flex flex-row justify-start items-center gap-3'><span className='loader'></span>Loading....</p>
+          ) : (
+            <p>{originalTranscription}</p>
+          )}
+        </div>
+        <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
+          <Label>Translated Transcription</Label>
+          {loading ? (
+            <p className='flex flex-row justify-start items-center gap-3'><span className='loader'></span>Loading....</p>
+          ) : (
+            <p>{translatedTranscription}</p>
+          )}
+        </div>
+      </div>
+      <div className='m-5 p-5 bg-slate-700 text-white rounded-md flex flex-col gap-3'>
+        <Label>Translated Voice</Label>
+        {audioSrc && (
+          <div className='flex flex-row justify-center items-center'>
+            <audio className='m-5' controls src={audioSrc}></audio>
+          </div>
+        )}
+      </div>
+      <div className='p-5 flex justify-center w-full gap-4'>
+        <Button onClick={handleTranscribe}>Process</Button>
+        <Button onClick={handleReset}>Reset</Button>
       </div>
     </div>
   );
