@@ -162,11 +162,17 @@ const App: React.FC = () => {
         </div>
         <div className='p-5 bg-slate-700 text-white rounded-md w-full gap-3'>
           <Label htmlFor="Result">Record / File Result</Label>
-          {audioSrc && (
+          {audioSrc ? (
             <div className='flex flex-row justify-center items-center'>
               <audio className='m-5' controls src={audioSrc}></audio>
             </div>
-          )}
+          ) : (
+            <div className='flex flex-row justify-center items-center'>
+              Please record/add sound file
+            </div>
+          )
+
+          }
         </div>
       </div>
 
@@ -176,7 +182,14 @@ const App: React.FC = () => {
           {loading ? (
             <p className='flex flex-row justify-start items-center gap-3'><span className='loader'></span>Loading....</p>
           ) : (
-            <p>{originalTranscription}</p>
+            <p>{originalTranscription ? (
+              originalTranscription
+            ) : (
+              <div className='flex flex-row justify-center items-center'>
+                Please record/add sound file
+              </div>
+            )}
+            </p>
           )}
         </div>
         <div className='p-5 bg-slate-700 text-white rounded-md flex w-full flex-col gap-3'>
@@ -184,7 +197,14 @@ const App: React.FC = () => {
           {loading ? (
             <p className='flex flex-row justify-start items-center gap-3'><span className='loader'></span>Loading....</p>
           ) : (
-            <p>{translatedTranscription}</p>
+            <p>{translatedTranscription ? (
+              translatedTranscription
+            ) : (
+              <div className='flex flex-row justify-center items-center'>
+                Please record/add sound file
+              </div>
+            )}
+            </p>
           )}
         </div>
       </div>

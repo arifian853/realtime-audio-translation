@@ -6,3 +6,4 @@ librosa
 transformers
 pydub
 sentencepiece
+TTS
