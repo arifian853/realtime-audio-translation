@@ -148,8 +148,8 @@ const App: React.FC = () => {
                 <SelectLabel>Languages</SelectLabel>
                 <SelectItem value="id-en">Indonesian to English</SelectItem>
                 <SelectItem value="en-id">English to Indonesian</SelectItem>
-                <SelectItem value="ja-en">Japanese to English</SelectItem>
-                <SelectItem value="en-ja">English to Japanese</SelectItem>
+                <SelectItem value="jap-en">Japanese to English</SelectItem>
+                <SelectItem value="en-jap">English to Japanese</SelectItem>
                 <SelectItem value="zh-en">Chinese to English</SelectItem>
                 <SelectItem value="en-zh">English to Chinese</SelectItem>
                 <SelectItem value="fr-en">French to English</SelectItem>

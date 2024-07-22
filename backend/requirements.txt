@@ -6,4 +6,5 @@ librosa
 transformers
 pydub
 sentencepiece
+sacremoses
 TTS

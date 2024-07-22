@@ -5,9 +5,7 @@ import torch
 import librosa
 from transformers import WhisperForConditionalGeneration, WhisperProcessor, MarianMTModel, MarianTokenizer
 from pydub import AudioSegment
-import soundfile as sf
-from TTS.tts.utils.synthesizer import Synthesizer
-from TTS.config.shared_configs import load_config
+from TTS.api import TTS
 
 app = Flask(__name__)
 CORS(app)
@@ -19,6 +17,7 @@ whisper_model_directory = "./whisper-small"
 processor = WhisperProcessor.from_pretrained(whisper_model_directory)
 model = WhisperForConditionalGeneration.from_pretrained(whisper_model_directory)
 
+# Path to save the audio file
 WAVE_OUTPUT_FILENAME = "output.wav"
 TTS_OUTPUT_FILENAME = "tts_output.wav"
 RATE = 16000
@@ -36,21 +35,6 @@ mt_model_paths = {
     'es-en': 'mt_pretrained_models/Helsinki-NLP_opus-mt-es-en',
     'en-es': 'mt_pretrained_models/Helsinki-NLP_opus-mt-en-es'
 }
-
-# Load the TTS model
-CONFIG_PATH = "models/tacotron2/config.json"
-MODEL_PATH = "models/tacotron2/tacotron2-DCA.pth.tar"
-VOCODER_PATH = "models/tacotron2/waveRNN.pth.tar"
-vocoder_config = "models/tacotron2/vocoder_config.json"
-
-# Load the TTS model and synthesizer
-synthesizer = Synthesizer(
-    tts_checkpoint=MODEL_PATH,
-    tts_config_path=CONFIG_PATH,
-    vocoder_checkpoint=VOCODER_PATH,
-    vocoder_config_path=vocoder_config,
-    use_cuda=torch.cuda.is_available()
-)
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe_audio():
@@ -110,10 +94,10 @@ def transcribe_audio():
     except Exception as e:
         return jsonify({"error": f"Error translating transcription: {str(e)}"}), 500
 
-    # Convert the translated text to speech
+    # Convert the translated text to speech using Coqui TTS
     try:
-        wav = synthesizer.tts(translated_transcription)
-        sf.write(TTS_OUTPUT_FILENAME, wav, RATE)
+        tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC", progress_bar=False, gpu=False)
+        tts.tts_to_file(text=translated_transcription, file_path=TTS_OUTPUT_FILENAME)
     except Exception as e:
         return jsonify({"error": f"Error generating TTS: {str(e)}"}), 500
 

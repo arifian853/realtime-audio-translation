@@ -4,7 +4,7 @@ from transformers import MarianMTModel, MarianTokenizer
 model_names = [
     'Helsinki-NLP/opus-mt-id-en',
     'Helsinki-NLP/opus-mt-en-id',
-    'Helsinki-NLP/opus-mt-ja-en',
+    'Helsinki-NLP/opus-mt-jap-en',
     'Helsinki-NLP/opus-mt-en-jap',
     'Helsinki-NLP/opus-mt-zh-en',
     'Helsinki-NLP/opus-mt-en-zh',
