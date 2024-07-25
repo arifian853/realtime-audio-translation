@@ -1,4 +1,5 @@
 openai-whisper
+TTS
 Flask
 flask_cors
 torch
@@ -7,4 +8,3 @@ transformers
 pydub
 sentencepiece
 sacremoses
-TTS

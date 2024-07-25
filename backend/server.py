@@ -23,10 +23,6 @@ RATE = 16000
 mt_model_paths = {
     'id-en': 'mt_pretrained_models/Helsinki-NLP_opus-mt-id-en',
     'en-id': 'mt_pretrained_models/Helsinki-NLP_opus-mt-en-id',
-    'jap-en': 'mt_pretrained_models/Helsinki-NLP_opus-mt-jap-en',
-    'en-jap': 'mt_pretrained_models/Helsinki-NLP_opus-mt-en-jap',
-    'zh-en': 'mt_pretrained_models/Helsinki-NLP_opus-mt-zh-en',
-    'en-zh': 'mt_pretrained_models/Helsinki-NLP_opus-mt-en-zh',
     'fr-en': 'mt_pretrained_models/Helsinki-NLP_opus-mt-fr-en',
     'en-fr': 'mt_pretrained_models/Helsinki-NLP_opus-mt-en-fr',
     'es-en': 'mt_pretrained_models/Helsinki-NLP_opus-mt-es-en',

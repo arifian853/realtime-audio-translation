@@ -1,4 +1,5 @@
 /venv
+/venv10
 /whisper-small
 /mt_pretrained_models
 output.wav

@@ -24,6 +24,7 @@ const App: React.FC = () => {
   const [recording, setRecording] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [audioSrc, setAudioSrc] = useState<string>('');
+  const [ttsAudioSrc, setTtsAudioSrc] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<Blob | null>(null);
   const [languagePair, setLanguagePair] = useState<string>('id-en'); // Default language
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -44,7 +45,7 @@ const App: React.FC = () => {
 
     const formData = new FormData();
     formData.append('file', selectedFile, 'audio.wav');
-    formData.append('language', languagePair); // Add the selected language to the form data
+    formData.append('language', languagePair);
 
     setLoading(true);
     try {
@@ -55,12 +56,14 @@ const App: React.FC = () => {
       });
       setOriginalTranscription(response.data.original_transcription);
       setTranslatedTranscription(response.data.translated_transcription);
+      setTtsAudioSrc(`http://127.0.0.1:5000${response.data.tts_audio_file}`);
     } catch (error) {
       console.error('Error uploading file:', error);
     } finally {
       setLoading(false);
     }
   };
+
 
   const handleStartRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
@@ -104,6 +107,7 @@ const App: React.FC = () => {
 
   const handleReset = () => {
     setAudioSrc('');
+    setTtsAudioSrc('');
     setSelectedFile(null);
     setOriginalTranscription('');
     setTranslatedTranscription('');
@@ -148,10 +152,6 @@ const App: React.FC = () => {
                 <SelectLabel>Languages</SelectLabel>
                 <SelectItem value="id-en">Indonesian to English</SelectItem>
                 <SelectItem value="en-id">English to Indonesian</SelectItem>
-                <SelectItem value="jap-en">Japanese to English</SelectItem>
-                <SelectItem value="en-jap">English to Japanese</SelectItem>
-                <SelectItem value="zh-en">Chinese to English</SelectItem>
-                <SelectItem value="en-zh">English to Chinese</SelectItem>
                 <SelectItem value="fr-en">French to English</SelectItem>
                 <SelectItem value="en-fr">English to French</SelectItem>
                 <SelectItem value="es-en">Spanish to English</SelectItem>
@@ -210,9 +210,13 @@ const App: React.FC = () => {
       </div>
       <div className='m-5 p-5 bg-slate-700 text-white rounded-md flex flex-col gap-3'>
         <Label>Translated Voice</Label>
-        {audioSrc && (
+        {ttsAudioSrc ? (
           <div className='flex flex-row justify-center items-center'>
-            <audio className='m-5' controls src={audioSrc}></audio>
+            <audio className='m-5' controls src={ttsAudioSrc}></audio>
+          </div>
+        ) : (
+          <div className='flex flex-row justify-center items-center'>
+            Please process to get translated voice
           </div>
         )}
       </div>
