@@ -56,14 +56,17 @@ const App: React.FC = () => {
       });
       setOriginalTranscription(response.data.original_transcription);
       setTranslatedTranscription(response.data.translated_transcription);
-      setTtsAudioSrc(`http://127.0.0.1:5000${response.data.tts_audio_file}`);
+      if (languagePair.endsWith("-en")) {
+        setTtsAudioSrc(response.data.tts_audio_file ? `http://127.0.0.1:5000${response.data.tts_audio_file}` : '');
+      } else {
+        setTtsAudioSrc('');
+      }
     } catch (error) {
       console.error('Error uploading file:', error);
     } finally {
       setLoading(false);
     }
   };
-
 
   const handleStartRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
@@ -216,7 +219,7 @@ const App: React.FC = () => {
           </div>
         ) : (
           <div className='flex flex-row justify-center items-center'>
-            Please process to get translated voice
+            {languagePair.endsWith("-en") ? "Please process to get translated voice" : "Voice not available for this language pair"}
           </div>
         )}
       </div>
