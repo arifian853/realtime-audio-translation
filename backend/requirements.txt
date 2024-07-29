@@ -1,6 +1,6 @@
 openai-whisper
 TTS
-Flask
+flask
 flask_cors
 torch
 librosa

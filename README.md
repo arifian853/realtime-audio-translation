@@ -13,8 +13,6 @@
     <img src="https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white">
     <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB">
     <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white">
-    <img src="https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white">
-    <img src="https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white">
 </div>
 
 ### Teams
@@ -29,42 +27,45 @@ This is how the project will run, in a simple term :
 
 <img src="img/project-flow.jpg"> 
 
-### Backend Requirements
 
+
+### Virtual Environment Requirements
+
+- Download Python v3.10.11 in https://www.python.org/downloads/release/python-31011/
+- Activate your virtual environment with the name ```venv10``` : 
+```
+C:\Users\your_users\AppData\Local\Programs\Python\Python310\python.exe -m venv venv10
+```
 - These are requirements for the backend project : 
 ```
 openai-whisper
-Flask
+TTS
+flask
 flask_cors
 torch
 librosa
 transformers
 pydub
 sentencepiece
+sacremoses
 ```
-
-- Make new virtual environment with the name 'venv' : 
-
-```
-python -m venv venv
-```
-
-- Activate it with : 
-
-```
-./venv/Scripts/activate
-```
-
-- Install requirements
-
+- Install the dependency requirements in the ```requirements.txt``` file with : 
 ```
 pip install -r requirements.txt
 ```
+- Activate the virtual environment it with : 
+
+```
+./venv10/Scripts/activate
+```
+
+### Backend Requirements
+
 
 - Run the server :
 
 ```
-py server5.py
+py server.py
 ```
 - Backend will served in ```localhost:5000```, and will only serve ```/transcribe``` endpoint.
 ```
@@ -89,7 +90,7 @@ http://localhost:5173
 
 ### Model used in backend
 
-- OpenAI Whisper as Automatic Speech Recognition
-- MarianMT as Machine Translation
-- 
-- 
+- OpenAI Whisper as Automatic Speech Recognition Pre-trained Model
+- MarianMT as Machine Translation Pre-trained Model
+- tacotron2-DDC as Text to Speech Pre-trained Model
+- hifigan as vocoder Model
