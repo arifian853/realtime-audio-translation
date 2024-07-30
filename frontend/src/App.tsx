@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from './components/ui/button';
 import './App.css'
 
-import { BsRecordFill } from "react-icons/bs";
+import { FaMicrophone } from "react-icons/fa";
 import { BsStopFill } from "react-icons/bs";
 
 import { BsSoundwave } from "react-icons/bs";
@@ -116,10 +116,11 @@ const App: React.FC = () => {
     setSelectedFile(null);
     setOriginalTranscription('');
     setTranslatedTranscription('');
+    setLoading(false)
   };
 
   return (
-    <div className='flex flex-row justify-center items-center'>
+    <div className='flex flex-row justify-center items-center bg-slate-800 min-h-screen py-5'>
       <div className='w-2/3'>
       <h1 className='p-5 m-5 bg-slate-700 text-white rounded-md text-center flex flex-row items-center justify-center gap-2'>AI Realtime Audio Translation <span className='text-3xl'><BsSoundwave /></span></h1>
       <div className='flex m-5 gap-3'>
@@ -133,7 +134,7 @@ const App: React.FC = () => {
             {recording ? (
               <Button className='flex items-center gap-2 justify center' onClick={handleStopRecording}>Stop Recording <span className='text-2xl'><BsStopFill /></span> </Button>
             ) : (
-              <Button className='flex items-center gap-2 justify center' onClick={handleStartRecording}>Start Recording <span className='text-2xl'><BsRecordFill /></span> </Button>
+              <Button className='flex items-center gap-2 justify center' onClick={handleStartRecording}>Start Recording <span className='text-xl'><FaMicrophone /></span> </Button>
             )}
             {
               recording ? (
