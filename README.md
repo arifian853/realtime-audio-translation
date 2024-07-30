@@ -15,6 +15,8 @@
     <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white">
 </div>
 
+<img src="img/cover.jpeg"> 
+
 ### Teams
 
 - Arifian Saputra [(arifian853)](https://github.com/arifian853)
@@ -26,6 +28,7 @@
 This is how the project will run, in a simple term :
 
 <img src="img/project-flow.png"> 
+
 
 
 
