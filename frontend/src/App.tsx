@@ -8,6 +8,8 @@ import './App.css'
 import { BsRecordFill } from "react-icons/bs";
 import { BsStopFill } from "react-icons/bs";
 
+import { BsSoundwave } from "react-icons/bs";
+
 import {
   Select,
   SelectContent,
@@ -117,8 +119,9 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1 className='p-5 m-5 bg-slate-700 text-white rounded-md text-center'>Realtime Audio Translation</h1>
+    <div className='flex flex-row justify-center items-center'>
+      <div className='w-2/3'>
+      <h1 className='p-5 m-5 bg-slate-700 text-white rounded-md text-center flex flex-row items-center justify-center gap-2'>AI Realtime Audio Translation <span className='text-3xl'><BsSoundwave /></span></h1>
       <div className='flex m-5 gap-3'>
         <div className="p-5 bg-slate-700 text-white rounded-md flex w-1/2 flex-col gap-3">
           <Label htmlFor="file">Input local audio file</Label>
@@ -227,6 +230,7 @@ const App: React.FC = () => {
         <Button onClick={handleTranscribe}>Process</Button>
         <Button onClick={handleReset}>Reset</Button>
       </div>
+    </div>
     </div>
   );
 };
