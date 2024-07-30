@@ -96,4 +96,4 @@ http://localhost:5173
 - OpenAI Whisper as Automatic Speech Recognition Pre-trained Model
 - MarianMT as Machine Translation Pre-trained Model
 - tacotron2-DDC as Text to Speech Pre-trained Model
-- hifigan as vocoder Model
+- HiFi-GAN as vocoder Model
