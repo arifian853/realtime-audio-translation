@@ -25,7 +25,7 @@
 ### Project flow
 This is how the project will run, in a simple term :
 
-<img src="img/project-flow.jpg"> 
+<img src="img/project-flow.png"> 
 
 
 
